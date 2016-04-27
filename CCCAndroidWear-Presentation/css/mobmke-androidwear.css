@@ -48,7 +48,7 @@ body {
 .reveal h5,
 .reveal h6 {
   margin: 0 0 20px 0;
-  color: #57C9E8;
+  color: #356f84;
   font-family: "Quicksand", sans-serif;
   font-weight: normal;
   line-height: 1.2;
@@ -213,7 +213,7 @@ body {
  * LINKS
  *********************************************/
 .reveal a {
-  color: #57C9E8;
+  color: #356f84;
   text-decoration: none;
   -webkit-transition: color .15s ease;
   -moz-transition: color .15s ease;
@@ -226,7 +226,7 @@ body {
 
 .reveal .roll span:after {
   color: #fff;
-  background: #1daed5; }
+  background: #1f414d; }
 
 /*********************************************
  * IMAGES
@@ -248,7 +248,7 @@ body {
 
 .reveal a:hover img {
   background: rgba(255, 255, 255, 0.2);
-  border-color: #57C9E8;
+  border-color: #356f84;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.55); }
 
 /*********************************************
@@ -256,19 +256,19 @@ body {
  *********************************************/
 .reveal .controls .navigate-left,
 .reveal .controls .navigate-left.enabled {
-  border-right-color: #57C9E8; }
+  border-right-color: #356f84; }
 
 .reveal .controls .navigate-right,
 .reveal .controls .navigate-right.enabled {
-  border-left-color: #57C9E8; }
+  border-left-color: #356f84; }
 
 .reveal .controls .navigate-up,
 .reveal .controls .navigate-up.enabled {
-  border-bottom-color: #57C9E8; }
+  border-bottom-color: #356f84; }
 
 .reveal .controls .navigate-down,
 .reveal .controls .navigate-down.enabled {
-  border-top-color: #57C9E8; }
+  border-top-color: #356f84; }
 
 .reveal .controls .navigate-left.enabled:hover {
   border-right-color: #74a7cb; }
@@ -289,7 +289,7 @@ body {
   background: rgba(0, 0, 0, 0.2); }
 
 .reveal .progress span {
-  background: #57C9E8;
+  background: #356f84;
   -webkit-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
   -moz-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
   transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985); }
