@@ -1,8 +1,3 @@
-##Wear Features
-###Google Now
-
-<img src="img/google-now.jpg" height="500" />
-
 Note:
 + Called an "intelligent personal assistant"
 + Small cards with info

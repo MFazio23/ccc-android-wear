@@ -1,33 +1,36 @@
 /**
- * Blood theme for reveal.js, tweaked for CCC
- * Author: Walther http://github.com/Walther
+ * Sky theme for reveal.js.
  *
- * Designed to be used with highlight.js theme
- * "monokai_sublime.css" available from
- * https://github.com/isagalaev/highlight.js/
- *
- * For other themes, change $codeBackground accordingly.
- *
+ * Copyright (C) 2011-2012 Hakim El Hattab, http://hakim.se
  */
-@import url(https://fonts.googleapis.com/css?family=Ubuntu:300,700,300italic,700italic);
 @import url(https://fonts.googleapis.com/css?family=Quicksand:400,700,400italic,700italic);
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
+.reveal a {
+  line-height: 1.3em;
+  font-size: smaller; }
+
 /*********************************************
  * GLOBAL STYLES
  *********************************************/
 body {
-  background: #2B2B2B;
-  background-color: #2B2B2B; }
+  background: #add9e4;
+  background: -moz-radial-gradient(center, circle cover, #f7fbfc 0%, #add9e4 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #f7fbfc), color-stop(100%, #add9e4));
+  background: -webkit-radial-gradient(center, circle cover, #f7fbfc 0%, #add9e4 100%);
+  background: -o-radial-gradient(center, circle cover, #f7fbfc 0%, #add9e4 100%);
+  background: -ms-radial-gradient(center, circle cover, #f7fbfc 0%, #add9e4 100%);
+  background: radial-gradient(center, circle cover, #f7fbfc 0%, #add9e4 100%);
+  background-color: #f7fbfc; }
 
 .reveal {
-  font-family: Ubuntu, "sans-serif";
+  font-family: "Open Sans", sans-serif;
   font-size: 36px;
   font-weight: normal;
-  color: #eee; }
+  color: #333; }
 
 ::selection {
-  color: #2B2B2B;
-  background: #57C9E8;
+  color: #fff;
+  background: #134674;
   text-shadow: none; }
 
 .reveal .slides > section,
@@ -45,13 +48,13 @@ body {
 .reveal h5,
 .reveal h6 {
   margin: 0 0 20px 0;
-  color: #eee;
-  font-family: Ubuntu, "sans-serif";
+  color: #F6B300;
+  font-family: "Quicksand", sans-serif;
   font-weight: normal;
   line-height: 1.2;
-  letter-spacing: normal;
+  letter-spacing: -0.08em;
   text-transform: uppercase;
-  text-shadow: 2px 2px 2px #2B2B2B;
+  text-shadow: none;
   word-wrap: break-word; }
 
 .reveal h1 {
@@ -67,7 +70,7 @@ body {
   font-size: 1em; }
 
 .reveal h1 {
-  text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25), 0 20px 20px rgba(0, 0, 0, 0.15); }
+  text-shadow: none; }
 
 /*********************************************
  * OTHER
@@ -210,20 +213,20 @@ body {
  * LINKS
  *********************************************/
 .reveal a {
-  color: #57C9E8;
+  color: #F6B300;
   text-decoration: none;
   -webkit-transition: color .15s ease;
   -moz-transition: color .15s ease;
   transition: color .15s ease; }
 
 .reveal a:hover {
-  color: #b1e6f4;
+  color: #74a7cb;
   text-shadow: none;
   border: none; }
 
 .reveal .roll span:after {
   color: #fff;
-  background: #1daed5; }
+  background: #aa7b00; }
 
 /*********************************************
  * IMAGES
@@ -231,7 +234,7 @@ body {
 .reveal section img {
   margin: 15px 0px;
   background: rgba(255, 255, 255, 0.12);
-  border: 4px solid #eee;
+  border: 4px solid #333;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
 
 .reveal section img.plain {
@@ -245,7 +248,7 @@ body {
 
 .reveal a:hover img {
   background: rgba(255, 255, 255, 0.2);
-  border-color: #57C9E8;
+  border-color: #F6B300;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.55); }
 
 /*********************************************
@@ -253,31 +256,31 @@ body {
  *********************************************/
 .reveal .controls .navigate-left,
 .reveal .controls .navigate-left.enabled {
-  border-right-color: #57C9E8; }
+  border-right-color: #F6B300; }
 
 .reveal .controls .navigate-right,
 .reveal .controls .navigate-right.enabled {
-  border-left-color: #57C9E8; }
+  border-left-color: #F6B300; }
 
 .reveal .controls .navigate-up,
 .reveal .controls .navigate-up.enabled {
-  border-bottom-color: #57C9E8; }
+  border-bottom-color: #F6B300; }
 
 .reveal .controls .navigate-down,
 .reveal .controls .navigate-down.enabled {
-  border-top-color: #57C9E8; }
+  border-top-color: #F6B300; }
 
 .reveal .controls .navigate-left.enabled:hover {
-  border-right-color: #b1e6f4; }
+  border-right-color: #74a7cb; }
 
 .reveal .controls .navigate-right.enabled:hover {
-  border-left-color: #b1e6f4; }
+  border-left-color: #74a7cb; }
 
 .reveal .controls .navigate-up.enabled:hover {
-  border-bottom-color: #b1e6f4; }
+  border-bottom-color: #74a7cb; }
 
 .reveal .controls .navigate-down.enabled:hover {
-  border-top-color: #b1e6f4; }
+  border-top-color: #74a7cb; }
 
 /*********************************************
  * PROGRESS BAR
@@ -286,33 +289,10 @@ body {
   background: rgba(0, 0, 0, 0.2); }
 
 .reveal .progress span {
-  background: #57C9E8;
+  background: #F6B300;
   -webkit-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
   -moz-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
   transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985); }
-
-.reveal p {
-  font-weight: 300;
-  text-shadow: 1px 1px #2B2B2B; }
-
-.reveal h1 {
-  color: #57C9E8; }
-
-.reveal h1,
-.reveal h2,
-.reveal h3,
-.reveal h4,
-.reveal h5,
-.reveal h6 {
-  font-weight: 700; }
-
-.reveal p code {
-  background-color: #23241d;
-  display: inline-block;
-  border-radius: 7px; }
-
-.reveal small code {
-  vertical-align: baseline; }
 
 .reveal section img {
   background: none;
@@ -326,4 +306,4 @@ body {
 .hidden {
   display: none; }
 
-/*# sourceMappingURL=mobmke-androidwear.css.map */
+/*# sourceMappingURL=ccc-androidwear.css.map */

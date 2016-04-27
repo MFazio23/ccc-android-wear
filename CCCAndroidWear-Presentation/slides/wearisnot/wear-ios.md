@@ -1,7 +1,3 @@
-##Wear + iOS
-
-<img src="img/android-wear-iphone.jpg" height="500"/>
-
 Note:
 + Wear support on iOS arrived on August 31, 2015
 + Limited to only some Wear devices

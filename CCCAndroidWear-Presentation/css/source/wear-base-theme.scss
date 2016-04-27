@@ -1,0 +1,13 @@
+// Theme template ------------------------------
+@import "../../node_modules/reveal.js/css/theme/template/theme";
+// ---------------------------------------------
+
+.reveal section img { background:none; border:none; box-shadow:none; margin: 0 }
+
+.reveal .slides section {
+  padding-top: 0;
+}
+
+.hidden {
+  display: none;
+}

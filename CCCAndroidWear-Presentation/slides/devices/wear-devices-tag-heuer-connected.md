@@ -1,7 +1,3 @@
-##Wear is...
-###TAG Heuer Connected
-
-<img src="img/tag-heuer-connected.jpg"/>
 
 Note:
 + TAG Heuer

@@ -1,6 +1,4 @@
-##Android Wear
-
-<img src="img/android-wear-collection.jpg" height="500" />
+#Android Wear
 
 Note:
 + Android for watches
