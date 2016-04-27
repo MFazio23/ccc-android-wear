@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single" android:title="@string/notifications_group_title">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:id="@+id/nav_notifications"
+            android:icon="@drawable/ic_notifications_active_black_24dp"
+            android:title="@string/notifications_title" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/nav_notification_actions"
+            android:icon="@drawable/ic_search_for_black_24dp"
+            android:title="@string/notification_actions_title" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:id="@+id/nav_notification_wearable_actions"
+            android:icon="@drawable/ic_search_for_black_24dp"
+            android:title="@string/wearable_only_notification_actions_title" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/nav_notification_large_text"
+            android:icon="@drawable/ic_accessibility_black_24dp"
+            android:title="Notification + Large Text" />
     </group>
 
     <item android:title="Communicate">

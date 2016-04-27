@@ -71,7 +71,7 @@
             android:lines="5"
             android:id="@+id/content_edit_text"
             android:layout_gravity="center_horizontal"
-            android:text="This is a test notification."
+            android:text="This is a very long description that won't show up properly in a normal description window. It's not very interesting, but it helps show how this works."
             android:inputType="textMultiLine" />
     </LinearLayout>
 

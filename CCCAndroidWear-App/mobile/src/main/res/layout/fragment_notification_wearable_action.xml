@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragments.NotificationFragment">
+    tools:context=".fragments.NotificationWearableActionFragment">
 
 
     <TextView
@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/subject_edit_text"
-            android:text="@string/default_notification_text"
+            android:text="Test Notification + Wear-Only Action"
             android:inputType="text" />
 
     </LinearLayout>
@@ -54,7 +54,7 @@
         android:layout_height="match_parent"
         android:id="@+id/content_layout"
         android:layout_below="@+id/subject_layout"
-        android:layout_above="@+id/send_notification_button">
+        android:layout_above="@+id/search_term_layout">
 
         <TextView
             android:layout_width="wrap_content"
@@ -71,8 +71,33 @@
             android:lines="5"
             android:id="@+id/content_edit_text"
             android:layout_gravity="center_horizontal"
-            android:text="This is a test notification."
+            android:text="This is a test notification with an action only available on the watch."
             android:inputType="textMultiLine" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/search_term_layout"
+        android:layout_above="@+id/send_notification_button">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/search_term_label"
+            android:id="@+id/search_term_label"
+            android:textSize="24sp"
+            android:padding="5dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/search_term_edit_text"
+            android:layout_gravity="center_horizontal"
+            android:text="WearableExtender"
+            android:inputType="text" />
     </LinearLayout>
 
     <Button

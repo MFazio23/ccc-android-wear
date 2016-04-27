@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -24,7 +25,10 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import org.faziodev.cccandroidwear.R;
+import org.faziodev.cccandroidwear.fragments.NotificationActionFragment;
+import org.faziodev.cccandroidwear.fragments.NotificationBigTextStyleFragment;
 import org.faziodev.cccandroidwear.fragments.NotificationFragment;
+import org.faziodev.cccandroidwear.fragments.NotificationWearableActionFragment;
 import org.faziodev.cccandroidwear.types.NotificationContent;
 
 public class MainActivity extends AppCompatActivity
@@ -118,14 +122,14 @@ public class MainActivity extends AppCompatActivity
         Fragment selectedFragment = null;
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_notifications) {
             selectedFragment = new NotificationFragment();
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
+        } else if (id == R.id.nav_notification_actions) {
+            selectedFragment = new NotificationActionFragment();
+        } else if (id == R.id.nav_notification_wearable_actions) {
+            selectedFragment = new NotificationWearableActionFragment();
+        } else if (id == R.id.nav_notification_large_text) {
+            selectedFragment = new NotificationBigTextStyleFragment();
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
@@ -146,7 +150,16 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public static void triggerNotification(final Context context, final String subject, final String content) {
+    public static void triggerNotification(final Context context, final String subject, final String content, final NotificationCompat.Action... actions) {
+        MainActivity.triggerNotification(context, subject, content, false, null, actions);
+    }
+    public static void triggerNotification(final Context context, final String subject, final String content, final boolean wearableOnly, final NotificationCompat.Action... actions) {
+        MainActivity.triggerNotification(context, subject, content, wearableOnly, null, actions);
+    }
+    public static void triggerNotification(final Context context, final String subject, final String content, final NotificationCompat.BigTextStyle bigTextStyle, final NotificationCompat.Action... actions) {
+        MainActivity.triggerNotification(context, subject, content, false, bigTextStyle, actions);
+    }
+    public static void triggerNotification(final Context context, final String subject, final String content, final boolean wearableOnly, final NotificationCompat.BigTextStyle bigTextStyle, final NotificationCompat.Action... actions) {
         int notificationId = 023;
 
         final Intent intent = new Intent();
@@ -156,9 +169,22 @@ public class MainActivity extends AppCompatActivity
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
             .setDefaults(Notification.DEFAULT_ALL)
             .setSmallIcon(R.mipmap.wear_gb_launcher)
+            .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.wear_gb_launcher_white_bg))
             .setContentTitle(subject)
             .setContentText(content)
             .setContentIntent(pendingIntent);
+
+        for(NotificationCompat.Action action : actions) {
+            if(wearableOnly) {
+                notificationBuilder.extend(new NotificationCompat.WearableExtender().addAction(action));
+            } else {
+                notificationBuilder.addAction(action);
+            }
+        }
+
+        if(bigTextStyle != null) {
+            notificationBuilder.setStyle(bigTextStyle);
+        }
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 

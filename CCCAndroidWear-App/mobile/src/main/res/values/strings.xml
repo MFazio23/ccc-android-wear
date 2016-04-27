@@ -14,4 +14,10 @@
     <string name="send_a_notification">Send a Notification</string>
     <string name="content_label">Content:</string>
     <string name="subject_label">Subject:</string>
+    <string name="search_term_label">Search Term:</string>
+    <string name="notifications_title">Notifications</string>
+    <string name="notification_actions_title">Notification Actions</string>
+    <string name="notifications_group_title">Notifications</string>
+    <string name="wearable_only_notification_actions_title">Wearable-Only Notification Actions</string>
+    <string name="default_notification_text">Test Notification</string>
 </resources>
