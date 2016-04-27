@@ -20,4 +20,7 @@
     <string name="notifications_group_title">Notifications</string>
     <string name="wearable_only_notification_actions_title">Wearable-Only Notification Actions</string>
     <string name="default_notification_text">Test Notification</string>
+    <string name="NotificationPlusAction">Notification + Action</string>
+    <string name="notfication_with_big_text">Notification w/ Big Text</string>
+    <string name="notification_pages">Notification w/ Pages</string>
 </resources>

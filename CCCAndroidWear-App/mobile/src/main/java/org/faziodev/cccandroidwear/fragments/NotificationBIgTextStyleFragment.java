@@ -36,7 +36,7 @@ public class NotificationBigTextStyleFragment extends Fragment {
                 final NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
                 bigTextStyle.bigText(contentEditText.getText().toString());
 
-                MainActivity.triggerNotification(getContext(), subjectEditText.getText().toString(), "We're not using this value.", bigTextStyle);
+                MainActivity.triggerNotification(getContext(), subjectEditText.getText().toString(), "This is shown in the small view.", bigTextStyle);
             }
         });
 

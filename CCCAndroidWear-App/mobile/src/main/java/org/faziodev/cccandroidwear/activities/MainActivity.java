@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -16,6 +18,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -23,6 +27,18 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.wearable.DataApi;
+import com.google.android.gms.wearable.DataEvent;
+import com.google.android.gms.wearable.DataEventBuffer;
+import com.google.android.gms.wearable.DataItem;
+import com.google.android.gms.wearable.DataMap;
+import com.google.android.gms.wearable.DataMapItem;
+import com.google.android.gms.wearable.PutDataMapRequest;
+import com.google.android.gms.wearable.PutDataRequest;
+import com.google.android.gms.wearable.Wearable;
 
 import org.faziodev.cccandroidwear.R;
 import org.faziodev.cccandroidwear.fragments.NotificationActionFragment;
@@ -30,14 +46,24 @@ import org.faziodev.cccandroidwear.fragments.NotificationBigTextStyleFragment;
 import org.faziodev.cccandroidwear.fragments.NotificationFragment;
 import org.faziodev.cccandroidwear.fragments.NotificationPagesFragment;
 import org.faziodev.cccandroidwear.fragments.NotificationWearableActionFragment;
+import org.faziodev.cccandroidwear.types.DataApiResult;
 import org.faziodev.cccandroidwear.types.NotificationContent;
 
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements
+            NavigationView.OnNavigationItemSelectedListener,
+            DataApi.DataListener,
+            GoogleApiClient.ConnectionCallbacks,
+            GoogleApiClient.OnConnectionFailedListener {
 
     private static String currentGroup;
     private Firebase firebaseDB;
-    private boolean newItems = false;
+    private GoogleApiClient googleApiClient;
+
+    private boolean newNotifiationItems = false;
+    private boolean newDataApiItems = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +77,7 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        drawer.openDrawer(Gravity.LEFT);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -64,25 +91,53 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //newItems check is to avoid getting all existing values
-                if(newItems) {
+                if(newNotifiationItems) {
                     final NotificationContent notificationContent
                         = dataSnapshot.getValue(NotificationContent.class);
 
-                    MainActivity.triggerNotification(
-                        getApplicationContext(),
-                        notificationContent.getSubject(),
-                        notificationContent.getContent()
-                    );
+                    PutDataMapRequest putDataMapReq = PutDataMapRequest.create("/firebase");
+                    putDataMapReq.getDataMap().putInt("source", DataApiResult.DataSource.Mobile.ordinal());
+                    putDataMapReq.getDataMap().putString("message", notificationContent.toString());
+                    putDataMapReq.getDataMap().putString("timestamp", new Date().toString());
+                    PutDataRequest putDataReq = putDataMapReq.asPutDataRequest();
+                    PendingResult<DataApi.DataItemResult> pendingResult =
+                        Wearable.DataApi.putDataItem(googleApiClient, putDataReq);
+
                 } else {
-                    newItems = true;
+                    newNotifiationItems = true;
                 }
             }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
+            public void onCancelled(FirebaseError firebaseError) { }
         });
+
+        final Firebase dataApiDB = this.firebaseDB.child("data-api");
+        dataApiDB.limitToLast(1).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //newItems check is to avoid getting all existing values
+                if(newDataApiItems) {
+                    for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        final DataApiResult result = snapshot.getValue(DataApiResult.class);
+                        Log.wtf("DataAPI Data", "Data API Result => [" + result.toString() + "]");
+                        MainActivity.triggerNotification(getApplicationContext(), result.getSource().name(), result.getNotes());
+                    }
+                    //Log.wtf("DataApiDB", "Data => [" + dataSnapshot.getValue().toString() + "]");
+                } else {
+                    newDataApiItems = true;
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) { }
+        });
+
+        this.googleApiClient = new GoogleApiClient.Builder(this)
+            .addConnectionCallbacks(this)
+            .addOnConnectionFailedListener(this)
+            .addApi(Wearable.API)
+            .build();
     }
 
     @Override
@@ -139,8 +194,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_notification_pages) {
             selectedFragment = new NotificationPagesFragment();
             MainActivity.currentGroup = "NotificationPages";
-        } else if (id == R.id.nav_send) {
-
         }
 
         if(selectedFragment != null) {
@@ -210,5 +263,49 @@ public class MainActivity extends AppCompatActivity
         }
 
         return notificationBuilder;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.googleApiClient.connect();
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        Wearable.DataApi.addListener(this.googleApiClient, this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Wearable.DataApi.removeListener(this.googleApiClient, this);
+        this.googleApiClient.disconnect();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onDataChanged(DataEventBuffer dataEvents) {
+        for (DataEvent event : dataEvents) {
+            if (event.getType() == DataEvent.TYPE_CHANGED) {
+                // DataItem changed
+                DataItem item = event.getDataItem();
+                if (item.getUri().getPath().compareTo("/firebase") == 0) {
+                    DataMap dataMap = DataMapItem.fromDataItem(item).getDataMap();
+                    this.firebaseDB.child("data-api").push().setValue(new DataApiResult(DataApiResult.DataSource.values()[dataMap.getInt("source")],dataMap.getString("message")));
+                }
+            } else if (event.getType() == DataEvent.TYPE_DELETED) {
+                // DataItem deleted
+            }
+        }
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }
