@@ -28,12 +28,14 @@ import org.faziodev.cccandroidwear.R;
 import org.faziodev.cccandroidwear.fragments.NotificationActionFragment;
 import org.faziodev.cccandroidwear.fragments.NotificationBigTextStyleFragment;
 import org.faziodev.cccandroidwear.fragments.NotificationFragment;
+import org.faziodev.cccandroidwear.fragments.NotificationPagesFragment;
 import org.faziodev.cccandroidwear.fragments.NotificationWearableActionFragment;
 import org.faziodev.cccandroidwear.types.NotificationContent;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static String currentGroup;
     private Firebase firebaseDB;
     private boolean newItems = false;
 
@@ -124,14 +126,19 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_notifications) {
             selectedFragment = new NotificationFragment();
+            MainActivity.currentGroup = "Notifications";
         } else if (id == R.id.nav_notification_actions) {
             selectedFragment = new NotificationActionFragment();
+            MainActivity.currentGroup = "NotificationAction";
         } else if (id == R.id.nav_notification_wearable_actions) {
             selectedFragment = new NotificationWearableActionFragment();
+            MainActivity.currentGroup = "NotificationWearableAction";
         } else if (id == R.id.nav_notification_large_text) {
             selectedFragment = new NotificationBigTextStyleFragment();
-        } else if (id == R.id.nav_share) {
-
+            MainActivity.currentGroup = "NotificationBigText";
+        } else if (id == R.id.nav_notification_pages) {
+            selectedFragment = new NotificationPagesFragment();
+            MainActivity.currentGroup = "NotificationPages";
         } else if (id == R.id.nav_send) {
 
         }
@@ -150,6 +157,11 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    public static void triggerNotification(final int notificationId, final Context context, final NotificationCompat.Builder builder) {
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+
+        notificationManager.notify(notificationId, builder.build());
+    }
     public static void triggerNotification(final Context context, final String subject, final String content, final NotificationCompat.Action... actions) {
         MainActivity.triggerNotification(context, subject, content, false, null, actions);
     }
@@ -160,8 +172,18 @@ public class MainActivity extends AppCompatActivity
         MainActivity.triggerNotification(context, subject, content, false, bigTextStyle, actions);
     }
     public static void triggerNotification(final Context context, final String subject, final String content, final boolean wearableOnly, final NotificationCompat.BigTextStyle bigTextStyle, final NotificationCompat.Action... actions) {
-        int notificationId = 023;
+        int notificationId = (int) (Math.random() * 10000);
 
+        final NotificationCompat.Builder builder = MainActivity.createNotificationBuilder(context, notificationId, subject, content, wearableOnly, bigTextStyle, actions);
+
+        MainActivity.triggerNotification(notificationId, context, builder);
+    }
+
+    public static NotificationCompat.Builder createNotificationBuilder(final Context context, final int notificationId, final String subject, final String content) {
+       return MainActivity.createNotificationBuilder(context, notificationId, subject, content, false, null);
+    }
+
+    public static NotificationCompat.Builder createNotificationBuilder(final Context context, final int notificationId, final String subject, final String content, final boolean wearableOnly, final NotificationCompat.BigTextStyle bigTextStyle, final NotificationCompat.Action... actions) {
         final Intent intent = new Intent();
         intent.putExtra("Extra-NotificationId", notificationId);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
@@ -172,6 +194,7 @@ public class MainActivity extends AppCompatActivity
             .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.wear_gb_launcher_white_bg))
             .setContentTitle(subject)
             .setContentText(content)
+            .setGroup(currentGroup)
             .setContentIntent(pendingIntent);
 
         for(NotificationCompat.Action action : actions) {
@@ -186,8 +209,6 @@ public class MainActivity extends AppCompatActivity
             notificationBuilder.setStyle(bigTextStyle);
         }
 
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-
-        notificationManager.notify(notificationId, notificationBuilder.build());
+        return notificationBuilder;
     }
 }

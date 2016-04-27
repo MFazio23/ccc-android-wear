@@ -18,6 +18,10 @@
             android:id="@+id/nav_notification_large_text"
             android:icon="@drawable/ic_accessibility_black_24dp"
             android:title="Notification + Large Text" />
+        <item
+            android:id="@+id/nav_notification_pages"
+            android:icon="@drawable/ic_import_contacts_black_24dp"
+            android:title="Notification with Pages" />
     </group>
 
     <item android:title="Communicate">
