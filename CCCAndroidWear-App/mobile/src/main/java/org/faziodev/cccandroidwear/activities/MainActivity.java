@@ -121,7 +121,11 @@ public class MainActivity extends AppCompatActivity
                     for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         final DataApiResult result = snapshot.getValue(DataApiResult.class);
                         Log.wtf("DataAPI Data", "Data API Result => [" + result.toString() + "]");
-                        MainActivity.triggerNotification(getApplicationContext(), result.getSource().name(), result.getNotes());
+                        MainActivity.triggerNotification(
+                            getApplicationContext(),
+                            result.getSource().name(),
+                            result.getNotes()
+                        );
                     }
                     //Log.wtf("DataApiDB", "Data => [" + dataSnapshot.getValue().toString() + "]");
                 } else {

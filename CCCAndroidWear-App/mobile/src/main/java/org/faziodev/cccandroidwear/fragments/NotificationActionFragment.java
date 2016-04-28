@@ -42,7 +42,11 @@ public class NotificationActionFragment extends Fragment {
                 final Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 final PendingIntent pendingIntent = PendingIntent.getActivity(getContext(), 0, intent, 0);
 
-                final NotificationCompat.Action action = new NotificationCompat.Action(android.R.drawable.ic_menu_search, "Google Search", pendingIntent);
+                final NotificationCompat.Action action
+                    = new NotificationCompat.Action(
+                        android.R.drawable.ic_menu_search,
+                    "Google Search",
+                    pendingIntent);
                 MainActivity.triggerNotification(getContext(), subjectEditText.getText().toString(), contentEditText.getText().toString(), action);
             }
         });
