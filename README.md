@@ -1,4 +1,4 @@
-#Not Just a Pretty Face: Utilizing Android Wear to Its Full Potential
+# Not Just a Pretty Face: Utilizing Android Wear to Its Full Potential
 
 _"Round or square. Traditional or modern. Wear it for fashion, fitness, or fun."_
 
